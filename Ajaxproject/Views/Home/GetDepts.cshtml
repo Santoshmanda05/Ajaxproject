@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "GetDepts";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#data").hide();
+        $.ajax({
+            type: "post",
+            url: "/Home/GetDeptNo",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                $("#ddldeptno").empty();
+                $("#ddldeptno").append($("<option/>").val("").text("-- Select Department --"));
+                $.each(response, function (index, result) {
+                    $("#ddldeptno").append($("<option/>").val(result.DEPTNO).text(result.DNAME));
+                });
+            }
+        });
+        $("#ddldeptno").change(function () {
+            if (($("#ddldeptno").val()) != "") {
+                var t = $("#empdata").html();
+                var s = "";
+                $("#data").show();
+                $.ajax({
+                    type: "post",
+                    url: "/Home/GetEmpData",
+                    data: "{'deptno':"+$("#ddldeptno").val()+"}",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        $("#empdata").empty();
+                        $.each(response, function (index, result) {
+                            s += "<tr><td>" + result.EMPNO + "</td>";
+                            s += "<td>" + result.ENAME + "</td>";
+                            s += "<td>" + result.JOB + "</td>";
+                            s += "<td>" + result.MGR + "</td>";
+                            s += "<td>" + Date(result.HIREDATE) + "</td>";
+                            s += "<td>" + result.SAL + "</td>";
+                            s += "<td>" + result.COMM + "</td>";
+                            s += "<td>" + result.DEPTNO + "</td></tr>";
+                        });
+                        $("#empdata").append(t + s);
+                    }
+                });
+            }
+            else {
+                $("#data").hide();
+            }
+        });
+    });
+</script>
+<h2>GetDepts</h2>
+@using (Html.BeginForm())
+{
+    @Html.Label("Department:")@Html.DropDownList("ddldeptno", new SelectList(""), "-- Select Department --")
+    <div id="data">
+        <table border="1" id="empdata" style="border-collapse:collapse;text-align:center;">
+            <tr>
+                <th>EMPNO</th>
+                <th>ENAME</th>
+                <th>JOB</th>
+                <th>MGR</th>
+                <th>HIREDATE</th>
+                <th>SAL</th>
+                <th>COMM</th>
+                <th>DEPTNO</th>
+            </tr>
+        </table>
+    </div>
+}

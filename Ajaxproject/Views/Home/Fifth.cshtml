@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Fifth";
+}
+
+<h2>Fifth</h2>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        $("#tableData tr").on("mouseover", function () {
+            $(this).css("background-color", "lightblue");
+        }).on("mouseout", function () {
+            $(this).css("background-color", "");
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                yearRange: '1920:2050',
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'slideDown',
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+        $("#txtEmpno").blur(function () {
+            alert($("#txtEmpno").val());
+            $("#txtEmpno1").val("Hello");
+        });
+        $("#Button1").click(function () {
+            var checks = $('input[name="Skill"]:checked');
+            var s = '';
+            for (i = 0; i < checks.length; i++) {
+                s += $(checks[i]).attr("sk") + " ";
+            }
+            alert(s);
+        });
+        $("#Gender").append("<option>Male</option><option>Female</option>");
+        $("#Gender").append($("<option/>").val("Trans").text("Trans"));
+        $("#Country").append("<option>India</option><option>USA</option>");
+
+        $("#Country").change(function () {
+            $("#State").empty();
+            $("#State").append($("<option/>").val("--Select State--").text("--Select State--"));
+            if ($(this).val() == "India") {
+                $("#State").append($("<option/>").val("AP").text("AP"));
+                $("#State").append($("<option/>").val("TS").text("TS"));
+            }
+            else {
+                $("#State").append($("<option/>").val("Texas").text("Texas"));
+                $("#State").append($("<option/>").val("California").text("California"));
+            }
+        });
+
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <table id="tableData">
+        <tr><td>Empno</td><td>Ename</td></tr>
+        <tr><td>1</td><td>ABC</td></tr>
+        <tr><td>2</td><td>XYZ</td></tr>
+        <tr><td>3</td><td>QWE</td></tr>
+    </table>
+    <p>Date:@Html.TextBox("datepicker")</p>
+    @Html.TextBox("txtEmpno")
+    @Html.TextBox("txtEmpno1")
+    <br />
+    @Html.Label("Skills")
+    @Html.CheckBox("Skill", false, new { sk = "Oracle" })@Html.Label("Oracle")
+    @Html.CheckBox("Skill", false, new { sk = "C#" })@Html.Label("C#")
+    @Html.CheckBox("Skill", false, new { sk = "SQL" })@Html.Label("SQL")
+    <br />
+    @Html.Label("Qualification")
+    @Html.CheckBox("Qualification", false, new { sk = "PG" })@Html.Label("PG")
+    @Html.CheckBox("Qualification", false, new { sk = "UG" })@Html.Label("UG")
+    <br />
+    <input id="Button1" type="button" value="Click" />
+    <br />
+    @Html.Label("Gender")
+    @Html.DropDownList("Gender", new SelectList(""), "--  Select Gender  --")
+    <br />
+    @Html.Label("Country")
+    @Html.DropDownList("Country", new SelectList(""), "--  Select Country  --")
+    <br />
+    @Html.Label("State")
+    @Html.DropDownList("State", new SelectList(""), "--  Select State  --")
+}

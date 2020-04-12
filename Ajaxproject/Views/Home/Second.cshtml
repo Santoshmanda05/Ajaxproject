@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Second";
+}
+
+<h2>Second</h2>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Button1").click(function () {
+            $("#d1").hide();
+        });
+        $("#Button2").click(function () {
+            $("#d1").show();
+        });
+        $("#Button3").click(function () {
+            $("#d1").fadeToggle(2000);
+        });
+        $("#txtEMPNO").focus(function () {
+            $(this).css("background-color", "cyan");
+        });
+        $("#txtEMPNO").blur(function () {
+            $(this).css("background-color", "");
+            alert($(this).val());
+        });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <input id="Button1" type="button" value="Hide" />
+    <input id="Button2" type="button" value="Show" />
+    <input id="Button3" type="button" value="Toggle" />
+    <div id="d1">
+        <h4>EMPNO:@Html.TextBox("txtEMPNO")</h4>
+        <input id="Submit1" type="submit" value="Submit" />
+    </div>
+}
+

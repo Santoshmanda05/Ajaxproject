@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("h1").dblclick(function () {
+            alert("h1 tag double click");
+        });
+        $(".d1").click(function () {
+            alert("div d1 tag click");
+        });
+        $("#d2").click(function () {
+            alert("div d2 tag click");
+        });
+        $("p").click(function () {
+            alert("p tag click");
+        });
+        $("#p2").click(function () {
+            $(this).hide();
+        });
+        $("#Button1").click(function () {
+            $("#p2").show();
+        });
+        $("#d3").mouseenter(function () {
+            alert("div d3 tag mouseenter");
+        });
+        $("#d4").mouseleave(function () {
+            alert("div d4 tag mouseleave");
+        });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <h1>ASP.NET</h1>
+    <div class="d1">
+        ASP.NET is a free web framework
+    </div>
+    <div id="d2">
+        Hello World,Welcome to ASP.NET
+    </div>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p id="p2">This is second paragraph</p>
+    <input id="Button1" type="button" value="Show" />
+    <div id="d3">This is div3</div>
+    <div id="d4">This is div4</div>
+}
+

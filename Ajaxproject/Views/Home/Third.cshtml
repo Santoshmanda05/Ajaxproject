@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Third";
+}
+
+<h2>Third</h2>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Gender").append("<option>Male</option><option>Female</option>");
+        $("#Gender").append($("<option/>").val("Trans").text("Trans"));
+        $(".c1").hover(function () {
+            $(this).css("background-color", "cyan");
+        },
+            function () {
+                $(this).css("background-color", "");
+            });
+        $("#Result").click(function () {
+            var no1 = $("#txtNo1").val();
+            var no2 = $("#txtNo2").val();
+            alert(no1 + " " + no2);
+        });
+        $("#Button1").click(function () {
+            $("#test").text("Hello World");
+        });
+        $("#Button2").click(function () {
+            $("#test").html("<h1>Hello World</h1>");
+            //$("#Gender").html("<option>Male</option><option>Female</option>");
+        });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <div id="test"><h1>This is a div tag</h1></div>
+    <input id="Button1" type="button" value="Text" />
+    <input id="Button2" type="button" value="Html" />
+    @Html.DropDownList("Gender", new SelectList(""), "--  Select Gender  --")
+    <table style="width:100%;">
+        <tr style="background-color:lightblue;"><td class="c1">One</td><td class="c1">Two</td><td class="c1">Three</td></tr>
+    </table>
+    <h4>Number1:@Html.TextBox("txtNo1")</h4>
+    <h4>Number2:@Html.TextBox("txtNo2")</h4>
+    <h4>Result:@Html.TextBox("txtResult")</h4>
+    <input id="Result" type="submit" value="Submit" />
+}
+
